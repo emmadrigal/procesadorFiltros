@@ -1,0 +1,85 @@
+
+//En la posición 0x92 se encuentra el ancho de la imagen
+//En la posición 0x96 se encuentra el largo de la imagen
+//En la posición 0x100 se encuentra el pixel de inicio de la imagen
+//En la posición 0x104 se encuentra el pixel de inicio de la imagen
+
+MOV R15, #96
+LD R1, R15, 0
+LD R2, R15, -4
+LD R3, R15, 4
+MOV R15, #104
+LD R4, R15, 0
+
+//Filtro Horizontal
+MOV R5, #0
+MOV R6, #0
+CMPLT R5, R1
+BT 1
+
+MUL R9, R6, R1
+ADD R9, R9, R5
+ADD R9, R9, R3
+LD  R7, R9, -1
+LD  R8, R9, 0
+LD  R9, R9, 1
+
+MAX R7, R7, R8
+MAX R7, R7, R9
+
+MUL R8, R6, R1
+ADD R8, R8, R5
+ADD R8, R8, R4
+
+ST R10, R8, 0
+MOV R10, #1
+ADD R5, R5, R10
+
+CMPLT R5, R1
+BT -15
+
+MOV R5, #0
+ADD R6, R6, R10
+
+CMPLT R6, R2
+BT -19
+
+//Filtro Vertical
+MOV R5, #0
+MOV R6, #0
+CMPLT R5, R1
+BT 1
+
+MUL R9, R6, R1
+ADD R9, R9, R5
+ADD R9, R9, R4
+LD  R8, R9, 0
+
+SUB R9, R9, R2
+LD  R7, R9, 0
+
+ADD R9, R9, R2
+ADD R9, R9, R2
+LD  R9, R9, 0
+
+MAX R7, R7, R8
+MAX R7, R7, R9
+
+MUL R8, R6, R1
+ADD R8, R8, R5
+ADD R8, R8, R3
+
+ST R10, R8, 0
+MOV R10, #1
+ADD R5, R5, R10
+
+CMPLT R5, R1
+BT -15
+
+MOV R5, #0
+ADD R6, R6, R10
+
+CMPLT R6, R2
+BT -19
+
+EOP
