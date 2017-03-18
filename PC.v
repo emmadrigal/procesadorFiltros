@@ -6,7 +6,7 @@ always@(posedge clk)begin
 	if(!EN)begin
 		dir=i_dir;
 	end else begin
-		dir=dir;
+		dir=dir;//?, no es reudunante?
 	end
 end
 
