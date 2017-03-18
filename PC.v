@@ -1,9 +1,15 @@
-module PC (input clock, input EN ,  input [31:0] c_i, output reg [31:0] c_o);
+module PC(input EN, input [31:0] i_dir, input clk, output [31:0] o_dir);
 
-always @ (posedge clock)begin
+reg dir;
+
+always@(posedge clk)begin
 	if(!EN)begin
-		c_o=c_i;
+		dir=i_dir;
+	end else begin
+		dir=dir;
 	end
 end
+
+assign o_dir=dir;
 
 endmodule 

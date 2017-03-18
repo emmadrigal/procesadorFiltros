@@ -15,11 +15,12 @@ wire [7:0] count;
 
 counter dut (count, clk, reset);
 
-initial // Clock generator
+/*initial // Clock generator
   begin
     clk = 0;
     forever #10 clk = !clk;
-  end
+  end*/
+always#1clk=!clk;
   
 initial	// Test stimulus
   begin
