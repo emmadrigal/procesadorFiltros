@@ -45,7 +45,7 @@ NOP
 NOP
 ST R1, R5, R6
 */
-assign sel_risk_mem3 = ((Ra_F_Reg == Robj_Mem_WB) && WE_Mem_WB && mem_WE_F_Reg);
+assign sel_risk_mem3 = ((Rb_F_Reg == Robj_Mem_WB) && WE_Mem_WB && mem_WE_F_Reg);
 
 always @* begin
 	//Riesgo de Datos en la ALU, dato A
