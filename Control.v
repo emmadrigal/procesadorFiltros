@@ -5,7 +5,9 @@ module Control (
 	output wire mem_WE, 				//Memory Write Enable
 	output wire mem_RE,  				//Memory Read Enable
 	output wire [1:0] sel_data_Out,	//Dato para el WB
-	output wire reg_WE					//
+	output wire reg_WE,					//habilita el Write en los registros
+	output wire RE_A,					//habilita el Write en los registros
+	output wire RE_B					//habilita el Write en los registros
 );
 
 /*
@@ -36,8 +38,14 @@ Sel_data_Out
 assign sel_data_Out[0] = opcode[3] & ~opcode[2] & opcode[1] & opcode[0];
 assign sel_data_Out[1] = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
 
+//RE_A NO se habilita en MOV, BT, NOP
+assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));
 
+//RE_B NO se habilita en NOT, MOV, BT, LD, NOP
+assign RE_B = ~( mem_RE | (~opcode[3] & opcode[2] & opcode[1] & ~opcode[0]) |  (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) | (opcode[3] & opcode[2] & opcode[1]));
 
-//Solo NO se habilita con CMP, Store, BT y NOP
+//WE NO se habilita con CMP, Store, BT y NOP
 assign reg_WE = ~( mem_WE | (opcode[3] & ~opcode[2] & ~opcode[1] & ~opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] & ~opcode[0])|(opcode[3] & opcode[2] & opcode[1] & opcode[0]));
+
+
 endmodule 
