@@ -41,7 +41,7 @@ assign sel_data_Out[1] = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
 //RE_A NO se habilita en MOV, BT, NOP
 assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));
 
-//RE_B NO se habilita en NOT, MOV, BT, LD, NOP
+//RE_B NO se habilita en NOT, MOV, LD, BT, NOP
 assign RE_B = ~( mem_RE | (~opcode[3] & opcode[2] & opcode[1] & ~opcode[0]) |  (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) | (opcode[3] & opcode[2] & opcode[1]));
 
 //WE NO se habilita con CMP, Store, BT y NOP
