@@ -1,5 +1,6 @@
 module adelantamiento (
 	input [3:0] Ra_F_Reg,
+	input [3:0] Rb_F_Reg,
 	input mem_WE_F_Reg,
 	
 	input [3:0] Ra_Reg_Exe, 
