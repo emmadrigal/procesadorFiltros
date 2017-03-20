@@ -1,7 +1,7 @@
 module Control (
 	input [3:0] opcode, 
 	output wire [1:0] sel_B, 			//Selecciona el segundo dato de la ALU
-	output wire [2:0] ALU_control,  
+	output wire [3:0] ALU_control,  
 	output wire mem_WE, 				//Memory Write Enable
 	output wire mem_RE,  				//Memory Read Enable
 	output wire [1:0] sel_data_Out,	//Dato para el WB
@@ -11,7 +11,7 @@ module Control (
 );
 
 /*
-Falta definir lógica para control de la ALU
+Falta definir lï¿½gica para control de la ALU
 */
 
 //Solo se habilita con un store

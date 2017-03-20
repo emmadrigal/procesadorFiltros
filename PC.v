@@ -5,7 +5,8 @@ reg dir;
 always@(posedge clk)begin
 	if(!EN)begin
 		dir=i_dir;
-	end else begin
+	end 
+	else begin
 		dir=dir;//?, no es reudunante?
 	end
 end
