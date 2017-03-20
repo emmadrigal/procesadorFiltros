@@ -37,7 +37,7 @@ ADD R1, R2, R3
 NOP
 ST R1, R5, R6
 */
-assign sel_risk_mem2 = ((Ra_Reg_Exe == Robj_Mem_WB) && WE_Mem_WB && mem_WE_Reg_Exe);
+assign sel_risk_mem2 = ((Rb_Reg_Exe == Robj_Mem_WB) && WE_Mem_WB && mem_WE_Reg_Exe);
 
 /*
 Soluciona el riesgo
