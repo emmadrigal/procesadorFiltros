@@ -10,7 +10,7 @@ reg [15:0] reg_o_inst;
 
 always@(posedge clk) begin 
 	if(!EN)begin
-		reg_o_inst = o_inst;
+		reg_o_inst = i_inst;
 	end
 end
 
