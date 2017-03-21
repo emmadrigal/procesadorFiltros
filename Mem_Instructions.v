@@ -7,17 +7,14 @@ module Instructions_Mem(	input EN,
 reg [31:0] mem_inst [0:7]; //[wordsize:0] a [0:arraysize]
 reg [31:0] reg_o_dir;
 
-always@(posedge clk)begin	//Read
-//	if(!EN) begin
-		reg_o_dir=mem_inst[i_dir];
-//	end else begin
-//		reg_o_dir=32'd0;
-//	end
-end
+always@(posedge clk) begin
+	if(!EN) begin				//Enable
+		reg_o_dir = mem_inst[i_dir];
+	end else begin					//Not Enable
+		reg_o_dir = 32'd4294967295;
+	end
+end 
 
-
-//always@(negedge clk)begin	//Write
-//end
 
 assign o_dir = reg_o_dir;
 

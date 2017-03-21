@@ -9,7 +9,7 @@ module Control (
 	output wire reg_WE,					//habilita el Write en los registros
 	output wire RE_A,					//habilita el Write en los registros
 	output wire RE_B,					//habilita el Write en los registros
-	output wire cmp_EN				//
+	output wire cmp_EN,				//
 	output wire branch				//
 );
 

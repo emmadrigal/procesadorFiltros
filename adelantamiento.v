@@ -17,6 +17,8 @@ module adelantamiento (
 	input [3:0] Robj_Mem_WB, 
 	input  WE_Mem_WB, 
 	
+	input clk,
+	
 	output reg [1:0] sel_risk_A, 
 	output reg [1:0] sel_risk_B,  
 	output wire sel_risk_mem,

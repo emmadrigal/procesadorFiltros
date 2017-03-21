@@ -1,4 +1,5 @@
 module Regi(	input EN, 
+			input i_mem_RE,
 			input [3:0] ia4,
 			input [3:0] ib4,
 			input [3:0] ic4,
@@ -10,6 +11,7 @@ module Regi(	input EN,
 			input [31:0] ii32,
 			input clk,	
 			
+			output o_mem_RE,
 			output [3:0] oa4,
 			output [3:0] ob4,
 			output [3:0] oc4,
@@ -21,6 +23,7 @@ module Regi(	input EN,
 			output [31:0] oi32
 			);
 
+reg r_o_mem_RE;
 reg [3:0] r_oa4;
 reg [3:0] r_ob4;
 reg [3:0] r_oc4;
@@ -32,7 +35,7 @@ reg [3:0] r_oh4;
 reg [31:0] r_oi32;
 
 always@(posedge clk) begin 
-	if(~EN)begin
+	if(!EN)begin
 		r_oa4 <= ia4;
 		r_ob4 <= ib4;
 		r_oc4 <= ic4;
@@ -42,7 +45,9 @@ always@(posedge clk) begin
 		r_og32 <= ig32;
 		r_oh4 <= ih4;
 		r_oi32 <= ii32;
-	end else begin
+		r_o_mem_RE <= i_mem_RE;
+	end
+/*	else begin
 		r_oa4 <= 4'd15;
 		r_ob4 <= 4'd15;
 		r_oc4 <= 4'd15;
@@ -53,8 +58,10 @@ always@(posedge clk) begin
 		r_oh4 <= 4'd15;
 		r_oi32 <= 32'd4294967295;		
 	end
+*/
 end
 
+assign o_mem_RE = r_o_mem_RE;
 assign oa4 = r_oa4 ;
 assign ob4 = r_ob4;
 assign oc4 = r_oc4;
