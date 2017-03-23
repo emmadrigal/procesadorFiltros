@@ -7,12 +7,14 @@ def weightedAverage(pixel):
 filename = raw_input("Please enter filename: ")
 image = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
 
-imgHex = ""
+
+f = open("hexImage.txt", 'w')
 
 for i in range(image.shape[0]):
     for j in range(image.shape[1]):
-        imgHex = imgHex + hex(image[i, j])[2:]
-
-f = open("hexImage.txt", 'w')
-f.write(imgHex)
+        f.write(hex(image[i, j])[2:3])
+        f.write("\n")
+        f.write(hex(image[i, j])[3:])
+        f.write("\n")
+        
 f.close
