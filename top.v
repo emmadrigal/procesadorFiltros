@@ -41,11 +41,29 @@ pixel_Gen Pixels(
 	.pixel_tick(p_tick), .video_on(video_on),
 	.pixel_x(pixel_x), .pixel_y(pixel_y),
 	
+	.data(data),
+	.addr(addr),
+	
 	.selectImage(selectImage),
 	.red_channel(VGA_R),
 	.blue_channel(VGA_B),
 	.green_channel(VGA_G)
 );
+
+
+wire [31:0] addr ;
+
+wire [7:0] data;
+
+	
+RAM	RAM_inst (
+	.address_a ( addr ),
+	.clock ( clk ),
+	.q_a ( data )
+	);
+
+
+
 
 assign LED = A && B;
 

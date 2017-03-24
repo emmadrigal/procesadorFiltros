@@ -6,13 +6,19 @@ module pixel_Gen(
 	
 	input wire [1:0] selectImage,
 	
+	
+	//Conexiones a la memoria
+	input wire [7:0] data,
+	
+	output wire [31:0] addr,
+	
 	//Salida de color segun el bit correspondiente
     output reg [7:0] red_channel,
 	output reg [7:0] blue_channel,
 	output reg [7:0] green_channel
    );
    
-
+assign addr = (pixel_y - 24)*450 + (pixel_x - 160);
 
 // constant declaration
 
@@ -401,8 +407,13 @@ always @(posedge pixel_tick) begin
 		end
 		
 	end
-	
 
+	
+	else if ((pixel_x >= 160) && (pixel_x <= 610) && (pixel_y >= 24) && (pixel_y <= 474)) begin
+		red_channel = data;
+		blue_channel = data;
+		green_channel = data;
+	end
 	
 	else begin
 		red_channel = 0;
