@@ -5,12 +5,13 @@ module Control (
 	output wire [3:0] ALU_control,  
 	output wire mem_WE, 				//Memory Write Enable
 	output wire mem_RE,  				//Memory Read Enable
-	output wire [1:0] sel_data_Out,	//Dato para el WB
+	output wire sel_data_Out,	//Dato para el WB
 	output wire reg_WE,					//habilita el Write en los registros
 	output wire RE_A,					//habilita el Write en los registros
 	output wire RE_B,					//habilita el Write en los registros
 	output wire cmp_EN,				//
-	output wire branch				//
+	output wire branch,				//
+	output wire ALU_mux
 );
 
 /*
@@ -35,11 +36,9 @@ assign sel_B[1] = opcode[3] & opcode[2] & ~opcode[1] & opcode[0];
 /*
 Sel_data_Out
 0 -> Logic-Aritmethic
-1 -> Immediate
-2 -> Load
+1 -> Load
 */
-assign sel_data_Out[0] = opcode[3] & ~opcode[2] & opcode[1] & opcode[0];
-assign sel_data_Out[1] = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
+assign sel_data_Out = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
 
 //RE_A NO se habilita en MOV, BT, NOP
 assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));

@@ -1,5 +1,5 @@
 module Register_REG_EXE(	input EN, 
-			input [14:0] i_ctrl,
+			input [15:0] i_ctrl,
 			input [3:0] i_Ra,
 			input [3:0] i_Rb,
 			input [31:0] i_DatA,
@@ -7,10 +7,10 @@ module Register_REG_EXE(	input EN,
 			input [31:0] i_Off21,
 			input [31:0] i_OffStore,
 			input [31:0] i_Robj,
-			input [3:0] i_imm,
+			input [31:0] i_imm,
 			input clk,	
 			
-			output [14:0] o_ctrl,
+			output [15:0] o_ctrl,
 			output [3:0] o_Ra,
 			output [3:0] o_Rb,
 			output [31:0] o_DatA,
@@ -18,10 +18,10 @@ module Register_REG_EXE(	input EN,
 			output [31:0] o_Off21,
 			output [31:0] o_OffStore,
 			output [31:0] o_Robj,
-			output [3:0] o_imm
+			output [31:0] o_imm
 			);
 
-reg [14:0] r_o_ctrl;
+reg [15:0] r_o_ctrl;
 reg [3:0] r_o_Ra;
 reg [3:0] r_o_Rb;
 reg [3:0] r_o_DatA;
@@ -29,7 +29,7 @@ reg [31:0] r_o_DatB;
 reg [31:0] r_o_Off21;
 reg [31:0] r_o_OffStore;
 reg [31:0] r_o_Robj;
-reg [3:0] r_o_imm;
+reg [31:0] r_o_imm;
 
 always@(posedge clk) begin 
 	if(!EN)begin

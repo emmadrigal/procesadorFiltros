@@ -10,18 +10,19 @@ module Register_Mem(input [3:0] DirA,
 						output [31:0] DataB);
 
 reg [31:0] register_memory [31:0]; //[wordsize:0] a [0:arraysize]
-reg [31:0] reg_DataA, reg_DataB;
+reg [31:0] reg_DataA;
+reg [31:0] reg_DataB;
 						
 always@(posedge clk)begin 	//Read
 	if(!RE_A) begin
 		reg_DataA=register_memory[DirA];
 	end else begin
-		reg_DataA=16'd4294967295;
+		reg_DataA=16'd65535;
 	end
 	if (!RE_B) begin
 		reg_DataB=register_memory[DirB];
 	end else begin
-		reg_DataB=16'd4294967295;
+		reg_DataB=16'd65535;
 	end
 end
 

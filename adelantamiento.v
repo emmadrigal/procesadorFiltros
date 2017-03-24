@@ -23,8 +23,10 @@ module adelantamiento (
 	output reg [1:0] sel_risk_B,  
 	output wire sel_risk_mem,
 	output wire sel_risk_mem2,
-	output wire sel_risk_mem3
+	output wire sel_risk_mem3,
+	output wire sel_risk_mem4
 );
+
 
 /*
 Soluciona el riesgo
@@ -48,7 +50,8 @@ NOP
 NOP
 ST R1, R5, R6
 */
-assign sel_risk_mem3 = ((Rb_F_Reg == Robj_Mem_WB) && WE_Mem_WB && mem_WE_F_Reg);
+assign sel_risk_mem3 = ((Rb_F_Reg == Robj_Mem_WB) && WE_Mem_WB && RE_B_Reg_Exe);
+assign sel_risk_mem4 = ((Rb_F_Reg == Robj_Mem_WB) && WE_Mem_WB && RE_A_Reg_Exe);
 
 always @* begin
 	//Riesgo de Datos en la ALU, dato A
