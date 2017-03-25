@@ -103,12 +103,7 @@ module RAM (
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 		altsyncram_component.clock_enable_output_b = "BYPASS",
 		altsyncram_component.indata_reg_b = "CLOCK0",
-`ifdef NO_PLI
-		altsyncram_component.init_file = "../mem_init.rif"
-`else
-		altsyncram_component.init_file = "../mem_init.hex"
-`endif
-,
+		altsyncram_component.init_file = "mem_Init.mif",
 		altsyncram_component.intended_device_family = "Cyclone IV GX",
 		altsyncram_component.lpm_type = "altsyncram",
 		altsyncram_component.numwords_a = 725000,
@@ -168,7 +163,7 @@ endmodule
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
 // Retrieval info: PRIVATE: MEMSIZE NUMERIC "5800000"
 // Retrieval info: PRIVATE: MEM_IN_BITS NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "../mem_init.hex"
+// Retrieval info: PRIVATE: MIFfilename STRING "mem_Init.mif"
 // Retrieval info: PRIVATE: OPERATION_MODE NUMERIC "3"
 // Retrieval info: PRIVATE: OUTDATA_ACLR_B NUMERIC "0"
 // Retrieval info: PRIVATE: OUTDATA_REG_B NUMERIC "1"
@@ -202,7 +197,7 @@ endmodule
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_B STRING "BYPASS"
 // Retrieval info: CONSTANT: INDATA_REG_B STRING "CLOCK0"
-// Retrieval info: CONSTANT: INIT_FILE STRING "../mem_init.hex"
+// Retrieval info: CONSTANT: INIT_FILE STRING "mem_Init.mif"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV GX"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
 // Retrieval info: CONSTANT: NUMWORDS_A NUMERIC "725000"
@@ -244,7 +239,7 @@ endmodule
 // Retrieval info: GEN_FILE: TYPE_NORMAL RAM.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL RAM.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL RAM.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL RAM.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL RAM.bsf TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL RAM_inst.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL RAM_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf

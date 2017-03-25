@@ -5,6 +5,8 @@ module top(
 	input wire B,
 	
 	input wire left_button,
+	input wire center_buttonA,
+	input wire center_buttonB,
 	input wire right_button,
 	
 	output wire hsync,
@@ -37,6 +39,8 @@ vga_sync Sync(
   .pixel_x(pixel_x), .pixel_y(pixel_y)
 );
 
+wire center_button = center_buttonA & center_buttonB;
+
 pixel_Gen Pixels(	
 	.pixel_tick(p_tick), .video_on(video_on),
 	.pixel_x(pixel_x), .pixel_y(pixel_y),
@@ -45,6 +49,8 @@ pixel_Gen Pixels(
 	.addr(addr),
 	
 	.selectImage(selectImage),
+	.center_button(center_button),
+	
 	.red_channel(VGA_R),
 	.blue_channel(VGA_B),
 	.green_channel(VGA_G)
