@@ -1,5 +1,5 @@
 module Register_REG_EXE(	input EN, 
-			input [15:0] i_ctrl,
+			input [16:0] i_ctrl,
 			input [3:0] i_Ra,
 			input [3:0] i_Rb,
 			input [31:0] i_DatA,
@@ -10,7 +10,7 @@ module Register_REG_EXE(	input EN,
 			input [31:0] i_imm,
 			input clk,	
 			
-			output [15:0] o_ctrl,
+			output [16:0] o_ctrl,
 			output [3:0] o_Ra,
 			output [3:0] o_Rb,
 			output [31:0] o_DatA,
@@ -21,7 +21,7 @@ module Register_REG_EXE(	input EN,
 			output [31:0] o_imm
 			);
 
-reg [15:0] r_o_ctrl;
+reg [16:0] r_o_ctrl;
 reg [3:0] r_o_Ra;
 reg [3:0] r_o_Rb;
 reg [3:0] r_o_DatA;

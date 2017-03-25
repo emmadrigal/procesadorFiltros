@@ -1,20 +1,20 @@
 module Register_EXE_MEM(	input EN, 
 
-			input [15:0] i_ctrl,
+			input [16:0] i_ctrl,
 			input [31:0] i_srcReg,
 			input [3:0] i_srcRegDir,
 			input [31:0] i_alu,
 			input [31:0] i_Robj,
 			input clk,	
 			
-			output [15:0] o_ctrl,
+			output [16:0] o_ctrl,
 			output [31:0] o_srcReg,
 			output [3:0] o_srcRegDir,
 			output [31:0] o_alu,
 			output [31:0] o_Robj
 			);
 
-reg [15:0] reg_o_ctrl;
+reg [16:0] reg_o_ctrl;
 reg [31:0] reg_o_srcReg;
 reg [3:0] reg_o_srcRegDir;
 reg [31:0] reg_o_alu;
