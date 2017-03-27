@@ -1,9 +1,6 @@
 module top(
 	input wire clk, //Reloj de 50MHz
 	
-	input wire A,
-	input wire B,
-	
 	input wire left_button,
 	input wire center_buttonA,
 	input wire center_buttonB,
@@ -17,9 +14,7 @@ module top(
 	
 	output wire [7:0] VGA_R,
 	output wire [7:0] VGA_G,
-	output wire [7:0] VGA_B,
-	
-	output wire LED
+	output wire [7:0] VGA_B
 );
 
 wire p_tick;
@@ -41,12 +36,21 @@ vga_sync Sync(
 
 wire center_button = center_buttonA & center_buttonB;
 
+reg data_test_out1 = 1234;
+reg data_test_out2 = 5678;
+reg data_test_out3 = 9012;
+
+
 pixel_Gen Pixels(	
 	.pixel_tick(p_tick), .video_on(video_on),
 	.pixel_x(pixel_x), .pixel_y(pixel_y),
 	
 	.data(data),
 	.addr(addr),
+	
+	.dataLD1(data_test_out1),
+	.dataLD2(data_test_out2),
+	.dataLD3(data_test_out3),
 	
 	.selectImage(selectImage),
 	.center_button(center_button),
@@ -58,20 +62,33 @@ pixel_Gen Pixels(
 
 
 wire [31:0] addr ;
-
 wire [7:0] data;
 
-	
+/*
+Canal A usado por el VGA
+Canal B usado por el procesador
+
+La escritura es durante el borde positivo
+
+Si el reloj del procesador es distinto al del VGA (25MHz), se debe volver a generar la RAM con el IP Catalog
+*/
 RAM	RAM_inst (
-	.address_a ( addr ),
 	.clock ( clk ),
-	.q_a ( data )
+
+	.address_a ( addr ),
+	.q_a ( data ),
+	
+	
+	.address_b ( processor_Addr ),
+	.data_b ( processor_Mem_In ),
+	.wren_b ( center_button ),
+	.q_b ( processor_Mem_Out )
 	);
-
-
-
-
-assign LED = A && B;
+	
+wire [31:0] processor_Addr;
+wire memWE; //Se activa en el ciclo positivo
+wire [7:0] processor_Mem_Out;
+wire [7:0] processor_Mem_In;
 
 //Usado para el control del Boton_Left
 reg cambio_SolicitadoLeft = 0, cambio_RealizadoLeft = 0;

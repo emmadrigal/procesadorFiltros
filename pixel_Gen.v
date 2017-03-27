@@ -7,6 +7,11 @@ module pixel_Gen(
 	input wire center_button,
 	input wire [1:0] selectImage,
 	
+	//Displays a number, used for a test
+	input wire [7:0] dataLD1,
+	input wire [7:0] dataLD2,
+	input wire [7:0] dataLD3,
+	
 	
 	//Conexiones a la memoria
 	input wire [7:0] data,
@@ -40,13 +45,14 @@ reg [1:0] filtered_image;
 
 always @(negedge center_button) begin	
 	current_image <= selectImage;
-end
-
-always @(current_image) begin
-	if(current_image != 3)
-			filtered_image <= current_image;
-	else
-		filtered_image <= filtered_image;
+	
+	if(current_image == 2'b11) begin
+			filtered_image <= filtered_image;
+	end
+	else begin
+		filtered_image <= current_image;
+	end
+	
 end
 
 assign addr = (pixel_y - 24)*imageSide + (pixel_x - 160) + imageOffset;
@@ -85,6 +91,7 @@ end
 
 //Checks that for a given pixel in the screen if it should be written
 always @(posedge pixel_tick) begin
+	//LENNA option
 	if ((pixel_x >= 24) && (pixel_x <= 120) && (pixel_y >= 24) && (pixel_y <= 40)) begin
 		columnY = (pixel_y - 24) >> expansionSize;
 		if (pixel_x <= 40) begin// 
@@ -167,6 +174,7 @@ always @(posedge pixel_tick) begin
 		end
 	end
 	
+	//BOATS option
 	else if ((pixel_x >= 24) && (pixel_x <= 120) && (pixel_y >= 48) && (pixel_y <= 64)) begin
 		columnY = (pixel_y - 48) >> expansionSize;
 		if (pixel_x <= 40) begin// 
@@ -250,6 +258,7 @@ always @(posedge pixel_tick) begin
 		end
 	end
 	
+	//BARBARA option
 	else if ((pixel_x >= 24) && (pixel_x <= 152) && (pixel_y >= 72) && (pixel_y <= 88)) begin
 		columnY = (pixel_y - 72) >> expansionSize;
 		if (pixel_x <= 40) begin// 
@@ -359,6 +368,7 @@ always @(posedge pixel_tick) begin
 		
 	end
 	
+	//FILTER option
 	else if ((pixel_x >= 24) && (pixel_x <= 136) && (pixel_y >= 96) && (pixel_y <= 112)) begin
 		columnY = (pixel_y - 96) >> expansionSize;
 		if (pixel_x <= 40) begin// 
@@ -455,27 +465,182 @@ always @(posedge pixel_tick) begin
 		
 	end
 	
-	else if ((pixel_x >= 160) && (pixel_x <= 560) && (pixel_y >= 24) && (pixel_y <= 424)) begin
-		red_channel = data;
-		blue_channel = data;
-		green_channel = data;
-		
-		if ((pixel_x > 460) || (pixel_y >  324)) begin
-			if((current_image == 2) || ( (current_image == 3) && ( filtered_image == 2) ) )begin
+	//Display Number 1
+	else if ((pixel_x >= 24) && (pixel_x <= 88) && (pixel_y >= 130) && (pixel_y <= 146)) begin
+		columnY = (pixel_y - 130) >> expansionSize;
+		if (pixel_x <= 40) begin// 
+			Character = (dataLD1 /1000);
+			if(row[7-((pixel_x - 24) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
 				red_channel = 0;
 				blue_channel = 0;
 				green_channel = 0;
 			end
+		end
+		else if (pixel_x <= 56) begin// 
+			Character = ((dataLD1 /100) % 10);
+			if(row[7-((pixel_x - 40) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
 			else begin
-				if ((pixel_x > 510) || (pixel_y >  374)) begin
-					if((current_image == 1) || ( (current_image == 3) && ( filtered_image == 1) ) ) begin
-						red_channel = 0;
-						blue_channel = 0;
-						green_channel = 0;
-					end
-				end
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
 			end
 		end
+		else if (pixel_x <= 72) begin// 
+			Character = ((dataLD1 /10) % 10);
+			if(row[7-((pixel_x - 56) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else begin// 
+			Character = (dataLD1 % 10);
+			if(row[7-((pixel_x - 72) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+	end
+	
+	//Display Number 2
+	else if ((pixel_x >= 24) && (pixel_x <= 88) && (pixel_y >= 160) && (pixel_y <= 176)) begin
+		columnY = (pixel_y - 160) >> expansionSize;
+		if (pixel_x <= 40) begin// 
+			Character = (dataLD2 /1000);
+			if(row[7-((pixel_x - 24) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else if (pixel_x <= 56) begin// 
+			Character = ((dataLD2 /100) % 10);
+			if(row[7-((pixel_x - 40) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else if (pixel_x <= 72) begin// 
+			Character = ((dataLD2 /10) % 10);
+			if(row[7-((pixel_x - 56) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else begin// 
+			Character = (dataLD2 % 10);
+			if(row[7-((pixel_x - 72) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+	end
+	
+	//Display Number 3
+	else if ((pixel_x >= 24) && (pixel_x <= 88) && (pixel_y >= 180) && (pixel_y <= 196)) begin
+		columnY = (pixel_y - 180) >> expansionSize;
+		if (pixel_x <= 40) begin// 
+			Character = (dataLD3 /1000);
+			if(row[7-((pixel_x - 24) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else if (pixel_x <= 56) begin// 
+			Character = ((dataLD3 /100) % 10);
+			if(row[7-((pixel_x - 40) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else if (pixel_x <= 72) begin// 
+			Character = ((dataLD3 /10) % 10);
+			if(row[7-((pixel_x - 56) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+		else begin// 
+			Character = (dataLD3 % 10);
+			if(row[7-((pixel_x - 72) >> expansionSize)]) begin
+				red_channel = -1;
+				blue_channel = -1;
+				green_channel = -1;
+			end
+			else begin
+				red_channel = 0;
+				blue_channel = 0;
+				green_channel = 0;
+			end
+		end
+	end
+	
+	//Display Image
+	else if ((pixel_x >= 160) && (pixel_x <= (160 + imageSide)) && (pixel_y >= 24) && (pixel_y <= (24 + imageSide))) begin
+		red_channel = data;
+		blue_channel = data;
+		green_channel = data;
 	end
 	
 	else begin
