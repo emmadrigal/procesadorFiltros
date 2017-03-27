@@ -9,7 +9,7 @@ module adelantamiento (
 	input RE_B_Reg_Exe,
 	input mem_WE_Reg_Exe,
 	
-	input [3:0] Robj_Exe_Mem, 
+	input [31:0] Robj_Exe_Mem, 
 	input WE_Exe_Mem,
 	input mem_WE,
 	input [3:0] SrcRegDir,

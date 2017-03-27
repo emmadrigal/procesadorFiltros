@@ -10,31 +10,40 @@ reg reg_CMP_Flag;
 
 always@(*) begin
 	case (code)
-		4'b0000:		//Add
+		4'b0000:begin		//Add
 			r_z = X + Y;
-		4'b0001:		//Sub
+			reg_CMP_Flag = 1'b0;
+		end 4'b0001:begin		//Sub
 			r_z = X - Y;
-		4'b0010:		//Mul
+			reg_CMP_Flag = 1'b0;
+		end 4'b0010:begin		//Mul
 			r_z = X * Y;
-		4'b0011:		//And
+			reg_CMP_Flag = 1'b0;
+		end 4'b0011:begin		//And
 			r_z = X & Y;
-		4'b0100:		//Or
+			reg_CMP_Flag = 1'b0;
+		end 4'b0100:begin		//Or
 			r_z = X | Y;
-		4'b0101:		//XOr
+			reg_CMP_Flag = 1'b0;
+		end 4'b0101:begin		//XOr
 			r_z = X ^ Y;
-		4'b0110:		//Not
+			reg_CMP_Flag = 1'b0;
+		end 4'b0110:begin		//Not
 			r_z = !X;
-		4'b0111:		//Max
+			reg_CMP_Flag = 1'b0;
+		end 4'b0111:	begin	//Max
+			reg_CMP_Flag = 1'b0;
 			if(X>Y) begin
 				r_z = X;
 			end else begin
 				r_z = Y;
 			end
-		4'b1000:		//Shift Logical left
+		end 4'b1000:begin		//Shift Logical left
 			r_z = X << Y;
-		4'b1001:		//Shift Logical Right
+		end 4'b1001:begin		//Shift Logical Right
 			r_z = X >> Y;
-		4'b1010:begin		//Compare Less Than
+			reg_CMP_Flag = 1'b0;
+		end 4'b1010:begin		//Compare Less Than
 			r_z = 32'd0;
 			if(X<Y) begin
 				reg_CMP_Flag = 1'b1;
