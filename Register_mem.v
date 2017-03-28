@@ -7,7 +7,11 @@ module Register_Mem(input [3:0] DirA,
 						input reg_WE,
 						input clk,
 						output [31:0]DatA, 
-						output [31:0] DataB);
+						output [31:0] DataB,
+						output [31:0] Reg_0, //Registros de prueba 
+						output [31:0] Reg_1,
+						output [31:0] Reg_2
+);
 
 reg [31:0] register_memory [31:0]; //[wordsize:0] a [0:arraysize]
 reg [31:0] reg_DataA;
