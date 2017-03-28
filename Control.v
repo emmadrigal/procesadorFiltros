@@ -41,7 +41,7 @@ For the CMP
 10: Equal
 11:Less than or equal
 */
-assign ALU_control = {CMP_Flag,opcode};
+assign ALU_control = {opcode,CMP_Flag};
 
 //Solo se habilita con un store
 assign mem_WE = opcode[3] & opcode[2] & ~opcode[1] & opcode[0];
