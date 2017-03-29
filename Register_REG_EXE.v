@@ -32,7 +32,6 @@ reg [31:0] r_o_Robj;
 reg [31:0] r_o_imm;
 
 always@(posedge clk) begin 
-	if(!EN)begin
 		r_o_ctrl <= i_ctrl;
 		r_o_Ra <= i_Ra;
 		r_o_Rb <= i_Rb;
@@ -42,7 +41,6 @@ always@(posedge clk) begin
 		r_o_OffStore <= i_OffStore;
 		r_o_Robj <= i_Robj;
 		r_o_imm <= i_imm;
-	end
 end
 
 assign o_ctrl = r_o_ctrl;

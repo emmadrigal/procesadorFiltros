@@ -21,13 +21,11 @@ reg [31:0] reg_o_alu;
 reg [31:0] reg_o_Robj;
 
 always@(posedge clk) begin 
-	if(!EN)begin
 		reg_o_ctrl = i_ctrl;
 		reg_o_srcReg = i_srcReg;
 		reg_o_srcRegDir = i_srcRegDir;
 		reg_o_alu = i_alu;
 		reg_o_Robj = i_Robj;
-	end
 end
 
 assign o_ctrl = reg_o_ctrl;

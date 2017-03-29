@@ -5,6 +5,6 @@ module mux_2x32(
    output [31:0] Y
 ); 
 
-assign Y = (SEL) ? A : B;
+assign Y = (SEL) ? B : A;
 
 endmodule

@@ -18,23 +18,18 @@
 // CREATED		"Tue Mar 28 15:07:59 2017"
 
 module ProcesadorFiltros(
-	clk,
-	Data_in_RAM,
-	mem_RE_RAM,
-	mem_WE_RAM,
-	Data_Dir_RAM,
-	Data_RAM,
-	R
+	input clk,
+	input Data_in_RAM,
+	output mem_RE_RAM,
+	output mem_WE_RAM,
+	output [31:0] Data_Dir_RAM,
+	output [7:0] Data_RAM,
+	output [95:0] R//,
+	//output [31:0] test_A,
+	//output [31:0] test_B,
+	//output test_C
 );
 
-
-input wire	clk;
-input wire	[7:0] Data_in_RAM;
-output wire	mem_RE_RAM;
-output wire	mem_WE_RAM;
-output wire	[31:0] Data_Dir_RAM;
-output wire	[7:0] Data_RAM;
-output wire	[95:0] R;
 
 wire	[16:0] ctrl;
 wire	[15:0] inst;
@@ -107,6 +102,10 @@ wire	[1:0] GDFX_TEMP_SIGNAL_0;
 assign	GDFX_TEMP_SIGNAL_1 = {inst[0],inst[1],inst[2],inst[3]};
 assign	GDFX_TEMP_SIGNAL_0 = {inst[9],inst[10]};
 
+
+//assign test_A = SYNTHESIZED_WIRE_74;
+//assign test_B = SYNTHESIZED_WIRE_76;
+//assign test_C = SYNTHESIZED_WIRE_70;
 
 adder	b2v_adder_2(
 	.opA(SYNTHESIZED_WIRE_0),
@@ -231,15 +230,13 @@ mux4_1	b2v_inst23(
 	.s(o_ctrl[16:15]),
 	.y(SYNTHESIZED_WIRE_6));
 
-
-mux4_1	b2v_inst26(
-	.I0(SYNTHESIZED_WIRE_73),
-	.I1(SYNTHESIZED_WIRE_20),
-	
-	
-	.s(mem_ctrl[6:5]),
-	.y(SYNTHESIZED_WIRE_50));
-
+mux_2x32 b2v_inst26 (
+    .SEL(mem_ctrl[5]), 
+    .A(SYNTHESIZED_WIRE_73), 
+    .B(SYNTHESIZED_WIRE_20), 
+    .Y(SYNTHESIZED_WIRE_50)
+    );
+	 
 
 mux_15_2_1	b2v_inst3(
 	.s(jump[2]),
@@ -255,13 +252,14 @@ mux_17_2_1	b2v_inst4(
 	.y(SYNTHESIZED_WIRE_52));
 
 
-\2x32mux 	b2v_inst5(
-	.SEL(jump[3]),
-	.A(SYNTHESIZED_WIRE_25),
-	.B(SYNTHESIZED_WIRE_26),
-	.Y(SYNTHESIZED_WIRE_0));
+mux_2x32 mux_2_32 (
+    .SEL(jump[3]), 
+    .A(SYNTHESIZED_WIRE_26), 
+    .B(SYNTHESIZED_WIRE_25), 
+    .Y(SYNTHESIZED_WIRE_0)
+    );
 
-assign	SYNTHESIZED_WIRE_23 = ~(jump[2] & risk[2]);
+assign	SYNTHESIZED_WIRE_23 = (jump[2] | risk[2]);
 
 
 detectorDeSaltos	b2v_Jump_Detector(
@@ -273,28 +271,28 @@ detectorDeSaltos	b2v_Jump_Detector(
 	.PC_EN(jump[0]));
 
 
-\2x32mux 	b2v_mux_sel_mem_risk_2(
+mux_2x32 	b2v_mux_sel_mem_risk_2(
 	.SEL(SYNTHESIZED_WIRE_28),
 	.A(SYNTHESIZED_WIRE_75),
 	.B(SYNTHESIZED_WIRE_74),
 	.Y(SYNTHESIZED_WIRE_47));
 
 
-\2x32mux 	b2v_mux_sel_mem_risk_3(
+mux_2x32 	b2v_mux_sel_mem_risk_3(
 	.SEL(o_ctrl[6]),
 	.A(SYNTHESIZED_WIRE_31),
 	.B(SYNTHESIZED_WIRE_32),
 	.Y(SYNTHESIZED_WIRE_45));
 
 
-\2x32mux 	b2v_mux_sel_risk3(
+mux_2x32 	b2v_mux_sel_risk3(
 	.SEL(SYNTHESIZED_WIRE_33),
 	.A(SYNTHESIZED_WIRE_34),
 	.B(SYNTHESIZED_WIRE_74),
 	.Y(SYNTHESIZED_WIRE_54));
 
 
-\2x32mux 	b2v_mux_sel_risk4(
+mux_2x32 	b2v_mux_sel_risk4(
 	.SEL(SYNTHESIZED_WIRE_36),
 	.A(SYNTHESIZED_WIRE_37),
 	.B(SYNTHESIZED_WIRE_76),
@@ -396,7 +394,7 @@ Register_Mem	b2v_Register_Memory(
 	.Dir_WRA(SYNTHESIZED_WIRE_62),
 	.DirA(inst[7:4]),
 	.DirB(inst[3:0]),
-	.DatA(SYNTHESIZED_WIRE_37),
+	.DataA(SYNTHESIZED_WIRE_37),
 	.DataB(SYNTHESIZED_WIRE_34),
 	.Reg_0(R_ALTERA_SYNTHESIZED[31:0]),
 	.Reg_1(R_ALTERA_SYNTHESIZED[63:32]),
@@ -415,7 +413,7 @@ riesgoCarga	b2v_risks(
 	.PC_EN(risk[0]));
 
 
-\2x32mux 	b2v_sel_mem_risk_1(
+mux_2x32 	b2v_sel_mem_risk_1(
 	.SEL(SYNTHESIZED_WIRE_64),
 	.A(SYNTHESIZED_WIRE_65),
 	.B(SYNTHESIZED_WIRE_74),

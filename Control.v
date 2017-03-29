@@ -64,6 +64,7 @@ Sel_data_Out
 1 -> Load
 */
 assign sel_data_Out = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
+//assign sel_data_Out = 1'b0;
 
 //RE_A NO se habilita en MOV, BT, NOP
 assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));
@@ -72,7 +73,8 @@ assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] 
 assign RE_B = ~( mem_RE | (~opcode[3] & opcode[2] & opcode[1] & ~opcode[0]) |  (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) | (opcode[3] & opcode[2] & opcode[1]));
 
 //WE NO se habilita con CMP, Store, BT y NOP
-assign reg_WE = ~( mem_WE | (opcode[3] & ~opcode[2] & ~opcode[1] & ~opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] & ~opcode[0])|(opcode[3] & opcode[2] & opcode[1] & opcode[0]));
+//assign reg_WE = ~( mem_WE | (opcode[3] & ~opcode[2] & ~opcode[1] & ~opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] & ~opcode[0])|(opcode[3] & opcode[2] & opcode[1] & opcode[0]));
+assign reg_WE = ( mem_WE | (opcode[3] & ~opcode[2] & ~opcode[1] & ~opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] & ~opcode[0])|(opcode[3] & opcode[2] & opcode[1] & opcode[0]));
 
 
 //Solo se habilita con el Compare

@@ -34,7 +34,10 @@ module ProcesadorFiltros_test;
 	wire [31:0] Data_Dir_RAM;
 	wire [7:0] Data_RAM;
 	wire [95:0] R;
-
+	wire [31:0] test_A;
+	wire [31:0] test_B;
+	wire test_C;
+	
 	// Instantiate the Unit Under Test (UUT)
 	ProcesadorFiltros uut (
 		.clk(clk), 
@@ -43,9 +46,14 @@ module ProcesadorFiltros_test;
 		.mem_WE_RAM(mem_WE_RAM), 
 		.Data_Dir_RAM(Data_Dir_RAM), 
 		.Data_RAM(Data_RAM), 
-		.R(R)
+		.R(R),
+		.test_A(test_A),
+		.test_B(test_B),
+		.test_C(test_C)
 	);
 
+	always#1 clk=~clk;
+	
 	initial begin
 		// Initialize Inputs
 		clk = 0;
@@ -53,7 +61,7 @@ module ProcesadorFiltros_test;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-        
+      
 		// Add stimulus here
 
 	end

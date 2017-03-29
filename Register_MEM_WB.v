@@ -15,11 +15,9 @@ reg [31:0] reg_o_WB_Data;
 reg [31:0] reg_o_WB_Dir;
 
 always@(posedge clk) begin 
-	if(!EN)begin
 		reg_o_WB_Data = i_WB_Data;
 		reg_o_WB_Dir = i_WB_Dir;
 		reg_o_WE_MEM_WB = i_WE_MEM_WB;
-	end
 end
 
 assign o_WE_MEM_WB = reg_o_WE_MEM_WB;

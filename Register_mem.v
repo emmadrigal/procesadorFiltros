@@ -18,8 +18,8 @@ reg [31:0] reg_DataA;
 reg [31:0] reg_DataB;
 
 assign Reg_0 = register_memory[1];
-assign Reg_1 = register_memory[2];
-assign Reg_2 = register_memory[3];
+assign Reg_1 = 32'd0;
+assign Reg_2 = 32'd0;
 	
 reg initialized = 0;
 	
