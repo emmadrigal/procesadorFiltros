@@ -34,9 +34,6 @@ module ProcesadorFiltros_test;
 	wire [31:0] Data_Dir_RAM;
 	wire [7:0] Data_RAM;
 	wire [95:0] R;
-	wire [31:0] test_A;
-	wire [31:0] test_B;
-	wire [5:0]test_C;
 	
 	// Instantiate the Unit Under Test (UUT)
 	ProcesadorFiltros uut (
@@ -46,10 +43,7 @@ module ProcesadorFiltros_test;
 		.mem_WE_RAM(mem_WE_RAM), 
 		.Data_Dir_RAM(Data_Dir_RAM), 
 		.Data_RAM(Data_RAM), 
-		.R(R),
-		.test_A(test_A),
-		.test_B(test_B),
-		.test_C(test_C)
+		.R(R)
 	);
 
 	always#1 clk=~clk;

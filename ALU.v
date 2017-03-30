@@ -10,64 +10,36 @@ reg reg_CMP_Flag;
 
 always@(*) begin
 	case (code)
-		6'b000000:begin		//Add
-			r_z = X + Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000001:begin		//Sub
-			r_z = X - Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000010:begin		//Mul
-			r_z = X * Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000011:begin		//And
-			r_z = X & Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000100:begin		//Or
-			r_z = X | Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000101:begin		//XOr
-			r_z = X ^ Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000110:begin		//Not
-			r_z = !Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b000111:	begin	//Max
-			reg_CMP_Flag = 1'b0;
-			if(X>Y) begin
-				r_z = X;
-			end else begin
-				r_z = Y;
-			end
-		end 6'b001000:begin		//Shift Logical left
-			r_z = X << Y;
-		end 6'b001001:begin		//Shift Logical Right
-			r_z = X >> Y;
-			reg_CMP_Flag = 1'b0;
-		end 6'b111010:begin		//Compare Less Than or equal
-			r_z = 32'd0;
-			if(X<=Y) begin
-				reg_CMP_Flag = 1'b1;
-			end else begin
-				reg_CMP_Flag = 1'b0;
-			end
-		end 6'b101011: begin		//Compare Equal
-			r_z = 32'd0;
-			if(X==Y) begin
-				reg_CMP_Flag = 1'b1;
-			end else begin
-				reg_CMP_Flag = 1'b0;
-			end
-		end 6'b011011: begin //Less
-			r_z = 32'd0;
-			if(X<Y) begin
-				reg_CMP_Flag = 1'b1;
-			end else begin
-				reg_CMP_Flag = 1'b0;
-			end
-		end default: begin 	//No Operation
-			r_z = 32'd0;
-			reg_CMP_Flag = 1'b0;
+		0 : r_z = X + Y;//Add
+		1 : r_z = X - Y;//Sub
+		2 : r_z = X * Y;//Mul
+		3 : r_z = X & Y;//And
+		4 : r_z = X | Y;//Or
+		5 : r_z = X ^ Y;//XOR
+		6 : r_z = ~Y;//Not
+		7 : begin	//Max
+			if(X>Y) r_z = X;
+			else r_z = Y;
 		end
+		11 : r_z = X << Y;//Shift Logical left
+		12 : r_z = X >> Y;//Shift Logical Right
+			
+		10 : begin		//Compare Less Than or equal
+			r_z = 0;
+			if(X<=Y) reg_CMP_Flag = 1;
+			else reg_CMP_Flag = 0;
+		end
+		9 : begin		//Compare Equal
+			r_z = 0;
+			if(X==Y) reg_CMP_Flag = 1;
+			else reg_CMP_Flag = 0;
+		end
+		8 : begin //Less
+			r_z = 0;
+			if(X<Y) reg_CMP_Flag = 1;
+			else reg_CMP_Flag = 0;
+		end
+		default: r_z = 0;//No Operation
 	endcase
 end
 

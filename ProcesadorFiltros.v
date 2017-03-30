@@ -24,10 +24,7 @@ module ProcesadorFiltros(
 	output mem_WE_RAM,
 	output [31:0] Data_Dir_RAM,
 	output [7:0] Data_RAM,
-	output [95:0] R,
-   output [31:0] test_A,
-	output [31:0] test_B,
-	output [5:0]test_C
+	output [95:0] R
 );
 
 
@@ -49,7 +46,7 @@ wire	[31:0] SYNTHESIZED_WIRE_6;
 wire	SYNTHESIZED_WIRE_70;
 wire	[3:0] SYNTHESIZED_WIRE_8;
 wire	[3:0] SYNTHESIZED_WIRE_71;
-wire	[31:0] SYNTHESIZED_WIRE_72;
+wire	[3:0] SYNTHESIZED_WIRE_72;
 wire	[3:0] SYNTHESIZED_WIRE_11;
 wire	[31:0] SYNTHESIZED_WIRE_12;
 wire	[31:0] SYNTHESIZED_WIRE_73;
@@ -74,11 +71,10 @@ wire	SYNTHESIZED_WIRE_33;
 wire	[31:0] SYNTHESIZED_WIRE_34;
 wire	SYNTHESIZED_WIRE_36;
 wire	[31:0] SYNTHESIZED_WIRE_37;
-wire	[31:0] SYNTHESIZED_WIRE_76;
 wire	[1:0] SYNTHESIZED_WIRE_43;
 wire	[31:0] SYNTHESIZED_WIRE_44;
 wire	[31:0] SYNTHESIZED_WIRE_45;
-wire	[31:0] SYNTHESIZED_WIRE_77;
+wire	[3:0] SYNTHESIZED_WIRE_77;
 wire	[31:0] SYNTHESIZED_WIRE_47;
 wire	[15:0] SYNTHESIZED_WIRE_49;
 wire	[31:0] SYNTHESIZED_WIRE_50;
@@ -102,10 +98,6 @@ wire	[1:0] GDFX_TEMP_SIGNAL_0;
 assign	GDFX_TEMP_SIGNAL_1 = {inst[0],inst[1],inst[2],inst[3]};
 assign	GDFX_TEMP_SIGNAL_0 = {inst[9],inst[10]};
 
-
-assign test_A = inst;
-assign test_B = SYNTHESIZED_WIRE_6;
-assign test_C = o_ctrl[14:9];
 
 adder	b2v_adder_2(
 	.opA(SYNTHESIZED_WIRE_0),
@@ -188,21 +180,24 @@ ALU	b2v_inst12(
 R__2	b2v_inst2(
 	.o_reg(SYNTHESIZED_WIRE_3));
 
-
+	
 adelantamiento	b2v_inst20(
 	.mem_WE_F_Reg(ctrl[8]),
 	.RE_A_Reg_Exe(o_ctrl[3]),
 	.RE_B_Reg_Exe(o_ctrl[2]),
-	.mem_WE_Reg_Exe(o_ctrl[8]),
-	.WE_Exe_Mem(mem_ctrl[7]),
+	.mem_WE_Reg_Exe(ctrl[8]),
+	.WE_Exe_Mem(mem_ctrl[4]),
 	.mem_WE(mem_ctrl[8]),
 	.WE_Mem_WB(SYNTHESIZED_WIRE_70),
 	.clk(clk),
 	.Ra_F_Reg(inst[3:0]),
+	.RE_A_F_Reg(ctrl[3]),
 	.Ra_Reg_Exe(SYNTHESIZED_WIRE_8),
 	.Rb_F_Reg(inst[7:4]),
+	.RE_B_F_Reg(ctrl[2]),
 	.Rb_Reg_Exe(SYNTHESIZED_WIRE_71),
 	.Robj_Exe_Mem(SYNTHESIZED_WIRE_72),
+	.Robj_Mem_WB(SYNTHESIZED_WIRE_62),
 	
 	.SrcRegDir(SYNTHESIZED_WIRE_11),
 	.sel_risk_mem(SYNTHESIZED_WIRE_64),
@@ -295,7 +290,7 @@ mux_2x32 	b2v_mux_sel_risk3(
 mux_2x32 	b2v_mux_sel_risk4(
 	.SEL(SYNTHESIZED_WIRE_36),
 	.A(SYNTHESIZED_WIRE_37),
-	.B(SYNTHESIZED_WIRE_76),
+	.B(SYNTHESIZED_WIRE_74),
 	.Y(SYNTHESIZED_WIRE_53));
 
 
@@ -349,7 +344,7 @@ Register_MEM_WB	b2v_Reg_MEM_WB(
 	.i_WB_Dir(SYNTHESIZED_WIRE_72),
 	.o_WE_MEM_WB(SYNTHESIZED_WIRE_70),
 	.o_WB_Data(SYNTHESIZED_WIRE_74),
-	.o_WB_Dir(SYNTHESIZED_WIRE_76));
+	.o_WB_Dir(SYNTHESIZED_WIRE_62));
 
 
 Register_REG_EXE	b2v_Reg_REG_EXE(
@@ -363,7 +358,7 @@ Register_REG_EXE	b2v_Reg_REG_EXE(
 	.i_OffStore(SYNTHESIZED_WIRE_57),
 	.i_Ra(inst[7:4]),
 	.i_Rb(inst[3:0]),
-	.i_Robj(SYNTHESIZED_WIRE_58),
+	.i_Robj(inst[11:8]),
 	.o_ctrl(o_ctrl),
 	.o_DatA(SYNTHESIZED_WIRE_12),
 	.o_DatB(SYNTHESIZED_WIRE_75),
@@ -424,10 +419,6 @@ Truncate8	b2v_truncate_31_8(
 	.i(SYNTHESIZED_WIRE_67),
 	.o(Data_RAM));
 
-
-Truncate4	b2v_truncate_4(
-	.i(SYNTHESIZED_WIRE_76),
-	.o(SYNTHESIZED_WIRE_62));
 
 assign	mem_RE_RAM = mem_ctrl[7];
 assign	mem_WE_RAM = mem_ctrl[8];
