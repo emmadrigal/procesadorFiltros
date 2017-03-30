@@ -1,6 +1,9 @@
 module adelantamiento (
 	input [3:0] Ra_F_Reg,
+	input RE_A_F_Reg,
 	input [3:0] Rb_F_Reg,
+	input RE_B_F_Reg,
+	
 	input mem_WE_F_Reg,
 	
 	input [3:0] Ra_Reg_Exe, 
@@ -9,7 +12,7 @@ module adelantamiento (
 	input RE_B_Reg_Exe,
 	input mem_WE_Reg_Exe,
 	
-	input [31:0] Robj_Exe_Mem, 
+	input [3:0] Robj_Exe_Mem, 
 	input WE_Exe_Mem,
 	input mem_WE,
 	input [3:0] SrcRegDir,
@@ -50,28 +53,32 @@ NOP
 NOP
 ST R1, R5, R6
 */
-assign sel_risk_mem3 = ((Rb_F_Reg == Robj_Mem_WB) && ~WE_Mem_WB && ~RE_B_Reg_Exe);
-
-assign sel_risk_mem4 = ((Ra_F_Reg == Robj_Mem_WB) && ~WE_Mem_WB && ~RE_A_Reg_Exe);
+assign sel_risk_mem3 = ((Rb_F_Reg == Robj_Mem_WB) && WE_Mem_WB && RE_B_F_Reg);
+assign sel_risk_mem4 = ((Ra_F_Reg == Robj_Mem_WB) && WE_Mem_WB && RE_A_F_Reg);
 
 always @* begin
 	//Riesgo de Datos en la ALU, dato A
-	if((Ra_Reg_Exe == Robj_Exe_Mem) && RE_A_Reg_Exe && WE_Exe_Mem)//Dato desde instruccion en mem
+	if((Ra_Reg_Exe == Robj_Exe_Mem) && RE_A_Reg_Exe && WE_Exe_Mem) begin//Dato desde instruccion en mem
 		sel_risk_A = 2'b01;
-	else if((Ra_Reg_Exe == Robj_Mem_WB) && RE_A_Reg_Exe && WE_Mem_WB)//Dato desde instruccion en WB
+	end
+	else if((Ra_Reg_Exe == Robj_Mem_WB) && RE_A_Reg_Exe && WE_Mem_WB) begin//Dato desde instruccion en WB
 		sel_risk_A = 2'b10;
-	else
-		sel_risk_A = 2'b00;		
+	end
+	else begin
+		sel_risk_A = 2'b00;
+	end
+		
+	//Riesgo de Datos en la ALU, dato A
+	if((Rb_Reg_Exe == Robj_Exe_Mem) && RE_B_Reg_Exe && WE_Exe_Mem) begin//Dato desde instruccion en mem
+		sel_risk_B = 2'b01;
+	end
+	else if((Rb_Reg_Exe == Robj_Mem_WB)  && RE_B_Reg_Exe && WE_Mem_WB) begin//Dato desde instruccion en WB
+		sel_risk_B = 2'b10;
+	end
+	else begin
+		sel_risk_B = 2'b00;
+	end
 end
 
-always@(*)begin
-	//Riesgo de Datos en la ALU, dato A
-	if((Rb_Reg_Exe == Robj_Exe_Mem) && ~RE_B_Reg_Exe && ~WE_Exe_Mem)//Dato desde instruccion en mem
-		sel_risk_B = 2'b01;
-	else if((Rb_Reg_Exe == Robj_Mem_WB)  && ~RE_B_Reg_Exe && ~WE_Mem_WB)//Dato desde instruccion en WB
-		sel_risk_B = 2'b10;
-	else
-		sel_risk_B = 2'b00;
-end
 
 endmodule 

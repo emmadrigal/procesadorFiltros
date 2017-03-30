@@ -21,33 +21,26 @@ assign Reg_0 = register_memory[1];
 assign Reg_1 = register_memory[2];
 assign Reg_2 = register_memory[3];
 	
-reg initialized = 0;
-	
-always@(*)begin//Read
-	if (!RE_B) begin
-		reg_DataB=register_memory[DirB];
-	end else begin
-		reg_DataB=16'd65535;
-	end
-end
-
 always@(*)begin 	//Read
+	reg_DataA=register_memory[DirA];
+	reg_DataB=register_memory[DirB];
+	/*
 	if(!RE_A) begin
 		reg_DataA=register_memory[DirA];
 	end else begin
 		reg_DataA=16'd65535;
 	end
+	if (!RE_B) begin
+		reg_DataB=register_memory[DirB];
+	end else begin
+		reg_DataB=16'd65535;
+	end
+	*/
 end
 
 
 always@(negedge clk)begin 	//Write
-	if(initialized == 0) begin
-		register_memory[1] = 4'd0;
-		register_memory[2] = 4'd0;
-		register_memory[3] = 4'd0;
-		initialized <= 1;
-	end
-	if(!reg_WE) begin
+	if(reg_WE) begin
 		register_memory[Dir_WRA]=DI;
 	end	
 end
