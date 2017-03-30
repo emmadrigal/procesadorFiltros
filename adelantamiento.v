@@ -65,10 +65,10 @@ always @* begin
 end
 
 always@(*)begin
-	//Riesgo de Datos en la ALU, dato A
-	if((Rb_Reg_Exe == Robj_Exe_Mem) && ~RE_B_Reg_Exe && ~WE_Exe_Mem)//Dato desde instruccion en mem
+	//Riesgo de Datos en la ALU, dato B
+	if(({28'd0,Rb_Reg_Exe} == Robj_Exe_Mem) && ~RE_B_Reg_Exe && ~WE_Exe_Mem)//Dato desde instruccion en mem
 		sel_risk_B = 2'b01;
-	else if((Rb_Reg_Exe == Robj_Mem_WB)  && ~RE_B_Reg_Exe && ~WE_Mem_WB)//Dato desde instruccion en WB
+	else if(({28'd0,Rb_Reg_Exe} == Robj_Mem_WB)  && ~RE_B_Reg_Exe && ~WE_Mem_WB)//Dato desde instruccion en WB
 		sel_risk_B = 2'b10;
 	else
 		sel_risk_B = 2'b00;

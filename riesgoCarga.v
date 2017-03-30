@@ -20,10 +20,12 @@ module riesgoCarga (
 //Inserta un NOP antes de la instrucci?n de 
 assign NOP_Mux = ((((Ra_F_Exe == Robj_Reg_Exe) &&  ~RE_A_F_Exe) || ((Rb_F_Exe == Robj_Reg_Exe) &&  ~RE_B_F_Exe) ) && ~mem_RE_Reg_Exe);
 
-assign F_Reg_EN = NOP_Mux;
+assign PC_EN = NOP_Mux;
 
 assign F_Reg_EN = NOP_Mux;
 
+assign F_Reg_EN = NOP_Mux;
 
 
-endmodule
+
+endmodule 

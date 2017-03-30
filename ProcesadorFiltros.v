@@ -24,10 +24,10 @@ module ProcesadorFiltros(
 	output mem_WE_RAM,
 	output [31:0] Data_Dir_RAM,
 	output [7:0] Data_RAM,
-	output [95:0] R//,
-//	output [31:0] test_A,
-//	output [31:0] test_B,
-//	output [5:0]test_C
+	output [95:0] R,
+   output [31:0] test_A,
+	output [31:0] test_B,
+	output [5:0]test_C
 );
 
 
@@ -103,9 +103,9 @@ assign	GDFX_TEMP_SIGNAL_1 = {inst[0],inst[1],inst[2],inst[3]};
 assign	GDFX_TEMP_SIGNAL_0 = {inst[9],inst[10]};
 
 
-//assign test_A = inst;
-//assign test_B = SYNTHESIZED_WIRE_73;
-//assign test_C = {4'd0,SYNTHESIZED_WIRE_15};
+assign test_A = inst;
+assign test_B = SYNTHESIZED_WIRE_6;
+assign test_C = o_ctrl[14:9];
 
 adder	b2v_adder_2(
 	.opA(SYNTHESIZED_WIRE_0),
@@ -192,8 +192,8 @@ R__2	b2v_inst2(
 adelantamiento	b2v_inst20(
 	.mem_WE_F_Reg(ctrl[8]),
 	.RE_A_Reg_Exe(o_ctrl[3]),
-	.RE_B_Reg_Exe(ctrl[2]),
-	.mem_WE_Reg_Exe(ctrl[8]),
+	.RE_B_Reg_Exe(o_ctrl[2]),
+	.mem_WE_Reg_Exe(o_ctrl[8]),
 	.WE_Exe_Mem(mem_ctrl[7]),
 	.mem_WE(mem_ctrl[8]),
 	.WE_Mem_WB(SYNTHESIZED_WIRE_70),
@@ -309,7 +309,7 @@ mux4_1	b2v_mux_sel_risk_B(
 
 
 PC	b2v_PC_Reg(
-	.EN(jump[0]),
+	.EN(risk[0]),
 	.clk(clk),
 	.i_dir(SYNTHESIZED_WIRE_44),
 	.o_dir(SYNTHESIZED_WIRE_69));

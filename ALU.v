@@ -29,7 +29,7 @@ always@(*) begin
 			r_z = X ^ Y;
 			reg_CMP_Flag = 1'b0;
 		end 6'b000110:begin		//Not
-			r_z = !X;
+			r_z = !Y;
 			reg_CMP_Flag = 1'b0;
 		end 6'b000111:	begin	//Max
 			reg_CMP_Flag = 1'b0;
