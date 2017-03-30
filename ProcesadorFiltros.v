@@ -25,9 +25,9 @@ module ProcesadorFiltros(
 	output [31:0] Data_Dir_RAM,
 	output [7:0] Data_RAM,
 	output [95:0] R//,
-	//output [31:0] test_A,
-	//output [31:0] test_B,
-	//output test_C
+//	output [31:0] test_A,
+//	output [31:0] test_B,
+//	output [5:0]test_C
 );
 
 
@@ -103,9 +103,9 @@ assign	GDFX_TEMP_SIGNAL_1 = {inst[0],inst[1],inst[2],inst[3]};
 assign	GDFX_TEMP_SIGNAL_0 = {inst[9],inst[10]};
 
 
-//assign test_A = SYNTHESIZED_WIRE_74;
-//assign test_B = SYNTHESIZED_WIRE_76;
-//assign test_C = SYNTHESIZED_WIRE_70;
+//assign test_A = inst;
+//assign test_B = SYNTHESIZED_WIRE_73;
+//assign test_C = {4'd0,SYNTHESIZED_WIRE_15};
 
 adder	b2v_adder_2(
 	.opA(SYNTHESIZED_WIRE_0),

@@ -41,7 +41,7 @@ For the CMP
 10: Equal
 11:Less than or equal
 */
-assign ALU_control = {opcode,CMP_Flag};
+assign ALU_control = {CMP_Flag,opcode};
 
 //Solo se habilita con un store
 assign mem_WE = opcode[3] & opcode[2] & ~opcode[1] & opcode[0];
@@ -67,10 +67,10 @@ assign sel_data_Out = opcode[3] & opcode[2] & ~opcode[1] & ~opcode[0];
 //assign sel_data_Out = 1'b0;
 
 //RE_A NO se habilita en MOV, BT, NOP
-assign RE_A = ~( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));
+assign RE_A = ( (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] ));
 
 //RE_B NO se habilita en NOT, MOV, LD, BT, NOP
-assign RE_B = ~( mem_RE | (~opcode[3] & opcode[2] & opcode[1] & ~opcode[0]) |  (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) | (opcode[3] & opcode[2] & opcode[1]));
+assign RE_B = ( mem_RE | (~opcode[3] & opcode[2] & opcode[1] & ~opcode[0]) |  (opcode[3] & ~opcode[2] & opcode[1] & opcode[0]) | (opcode[3] & opcode[2] & opcode[1]));
 
 //WE NO se habilita con CMP, Store, BT y NOP
 //assign reg_WE = ~( mem_WE | (opcode[3] & ~opcode[2] & ~opcode[1] & ~opcode[0]) |  (opcode[3] & opcode[2] & opcode[1] & ~opcode[0])|(opcode[3] & opcode[2] & opcode[1] & opcode[0]));

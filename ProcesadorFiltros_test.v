@@ -36,7 +36,7 @@ module ProcesadorFiltros_test;
 	wire [95:0] R;
 	wire [31:0] test_A;
 	wire [31:0] test_B;
-	wire test_C;
+	wire [5:0]test_C;
 	
 	// Instantiate the Unit Under Test (UUT)
 	ProcesadorFiltros uut (

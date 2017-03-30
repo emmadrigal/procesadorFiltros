@@ -18,17 +18,12 @@ reg [31:0] reg_DataA;
 reg [31:0] reg_DataB;
 
 assign Reg_0 = register_memory[1];
-assign Reg_1 = 32'd0;
-assign Reg_2 = 32'd0;
+assign Reg_1 = register_memory[2];
+assign Reg_2 = register_memory[3];
 	
 reg initialized = 0;
 	
-always@(posedge clk)begin 	//Read
-	if(!RE_A) begin
-		reg_DataA=register_memory[DirA];
-	end else begin
-		reg_DataA=16'd65535;
-	end
+always@(*)begin//Read
 	if (!RE_B) begin
 		reg_DataB=register_memory[DirB];
 	end else begin
@@ -36,12 +31,20 @@ always@(posedge clk)begin 	//Read
 	end
 end
 
+always@(*)begin 	//Read
+	if(!RE_A) begin
+		reg_DataA=register_memory[DirA];
+	end else begin
+		reg_DataA=16'd65535;
+	end
+end
+
 
 always@(negedge clk)begin 	//Write
 	if(initialized == 0) begin
-		register_memory[1] = 1234;
-		register_memory[2] = 6545;
-		register_memory[3] = 8979;
+		register_memory[1] = 4'd0;
+		register_memory[2] = 4'd0;
+		register_memory[3] = 4'd0;
 		initialized <= 1;
 	end
 	if(!reg_WE) begin
