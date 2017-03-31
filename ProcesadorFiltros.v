@@ -114,7 +114,6 @@ adder	b2v_adder_3(
 CMP_REG	b2v_CMP_Register(
 	.clk(clk),
 	.CMP_EN(o_ctrl[1]),
-	.branch(o_ctrl[0]),
 	.CMP_flag(SYNTHESIZED_WIRE_4),
 	.flag(SYNTHESIZED_WIRE_27));
 

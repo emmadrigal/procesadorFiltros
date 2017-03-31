@@ -14,12 +14,12 @@ always@(negedge clk) begin
 	if(initialized == 0) begin
 		mem_inst[0] <= 16'hb300;
 		mem_inst[1] <= 16'hb200;
-		mem_inst[2] <= 16'hb101;
+		mem_inst[2] <= 16'hb100;
 		mem_inst[3] <= 16'h8b11;
 		mem_inst[4] <= 16'he006;
-		mem_inst[5] <= 16'hb103;
-		mem_inst[6] <= 16'hffff;
-		mem_inst[7] <= 16'hffff;
+		mem_inst[5] <= 16'hb30f;
+		mem_inst[6] <= 16'hb20f;
+		mem_inst[7] <= 16'hb10f;
 		mem_inst[8] <= 16'hffff;
 		mem_inst[9] <= 16'hffff;
 		mem_inst[10] <= 16'hffff;
@@ -27,7 +27,7 @@ always@(negedge clk) begin
 		mem_inst[12] <= 16'hffff;
 		mem_inst[13] <= 16'hffff;
 		mem_inst[14] <= 16'hffff;
-		mem_inst[15] <= 16'hb207;
+		mem_inst[15] <= 16'hffff;
 		mem_inst[16] <= 16'hffff;
 		mem_inst[17] <= 16'hffff;
 		mem_inst[18] <= 16'hffff;
