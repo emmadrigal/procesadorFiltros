@@ -56,7 +56,7 @@ always @* begin
 				1 : ALU_control = 8;//LT
 				2 : ALU_control = 9;//E
 				3 : ALU_control = 10;//LE
-				default : ALU_control = 14;//NOP
+				default : ALU_control = 6'd63;//NOP
 			endcase
 		end
 		9 : ALU_control = 11;//SLL
@@ -68,9 +68,9 @@ always @* begin
 end
 
 //Solo se habilita con un store
-assign mem_WE = opcode[3] && opcode[2] && ~opcode[1] && opcode[0];
+assign mem_WE = (opcode[3] && opcode[2] && ~opcode[1] && opcode[0]);
 //Solo se habilita con un load
-assign mem_RE  = opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0];
+assign mem_RE  = (opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0]);
 
 /*
 Sel B
@@ -78,8 +78,8 @@ Sel B
 1 -> Load offset
 2 -> Store offset
 */
-assign sel_B[0] = opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0];
-assign sel_B[1] = opcode[3] && opcode[2] && ~opcode[1] && opcode[0];
+assign sel_B[0] = opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0] || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
+assign sel_B[1] = opcode[3] && opcode[2] && ~opcode[1] && opcode[0] || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
 
 
 /*
@@ -87,25 +87,25 @@ Sel_data_Out
 0 -> Logic-Aritmethic
 1 -> Load
 */
-assign sel_data_Out = opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0];
+assign sel_data_Out = (opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0]) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
 //assign sel_data_Out = 1'b0;
 
 //RE_A NO se habilita en MOV, BT, NOP
 assign RE_A = ~( (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) ||  (opcode[3] && opcode[2] && opcode[1] ));
 
 //RE_B NO se habilita en NOT, MOV, LD, BT, NOP
-assign RE_B = ~( mem_RE || (~opcode[3] && opcode[2] && opcode[1] && ~opcode[0]) ||  (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) || (opcode[3] && opcode[2] && opcode[1]));
+assign RE_B = ~( mem_RE || (~opcode[3] && opcode[2] && opcode[1] && ~opcode[0]) ||  (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) || (opcode[3] && opcode[2] && opcode[1])) ;
 
 //WE NO se habilita con CMP, ST, BT y NOP
-assign reg_WE = ~( mem_WE || (opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0]) ||  (opcode[3] && opcode[2] && opcode[1]));
+assign reg_WE = ~( mem_WE || (opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0]) ||  (opcode[3] && opcode[2] && opcode[1])) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
 
 
 //Solo se habilita con el Compare
-assign cmp_EN = opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0];
+assign cmp_EN = opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0] | (opcode[0]&&opcode[1]&&opcode[2]&opcode[3]);
 
-assign branch = opcode[3] && opcode[2] && opcode[1] && ~opcode[0];
+assign branch = opcode[3] && opcode[2] && opcode[1] && ~opcode[0] | (opcode[0]&&opcode[1]&&opcode[2]&opcode[3]);
 
 //Solo se habilita para el inmediato con un MOV (1011)
-assign ALU_mux = opcode[3] && ~opcode[2] && opcode[1] && opcode[0];
+assign ALU_mux = (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
 
 endmodule 

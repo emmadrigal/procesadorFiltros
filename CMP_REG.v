@@ -6,7 +6,7 @@ module CMP_REG(input clk,
 
 reg reg_flag=1'd0;
 
-always@(negedge clk)begin
+always@(*)begin
 	if(CMP_EN)begin
 		reg_flag = CMP_flag;
 	end else begin

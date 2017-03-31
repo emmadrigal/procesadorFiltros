@@ -329,7 +329,7 @@ Register_EXE_MEM	b2v_Reg_EXE_MEM(
 
 
 Register_F_REG	b2v_Reg_F_REG(
-	.EN(risk[1]),
+	.EN(risk[1]|jump[3]),
 	.clk(clk),
 	.i_inst(SYNTHESIZED_WIRE_49),
 	.o_inst(inst));
