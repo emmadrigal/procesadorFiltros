@@ -78,8 +78,8 @@ Sel B
 1 -> Load offset
 2 -> Store offset
 */
-assign sel_B[0] = opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0] || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
-assign sel_B[1] = opcode[3] && opcode[2] && ~opcode[1] && opcode[0] || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
+assign sel_B[0] = (opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0]) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
+assign sel_B[1] = (opcode[3] && opcode[2] && ~opcode[1] && opcode[0]) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
 
 
 /*
@@ -87,7 +87,7 @@ Sel_data_Out
 0 -> Logic-Aritmethic
 1 -> Load
 */
-assign sel_data_Out = (opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0]) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
+assign sel_data_Out = (opcode[3] && opcode[2] && ~opcode[1] && ~opcode[0]);
 //assign sel_data_Out = 1'b0;
 
 //RE_A NO se habilita en MOV, BT, NOP
@@ -97,7 +97,7 @@ assign RE_A = ~( (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) ||  (opcode
 assign RE_B = ~( mem_RE || (~opcode[3] && opcode[2] && opcode[1] && ~opcode[0]) ||  (opcode[3] && ~opcode[2] && opcode[1] && opcode[0]) || (opcode[3] && opcode[2] && opcode[1])) ;
 
 //WE NO se habilita con CMP, ST, BT y NOP
-assign reg_WE = ~( mem_WE || (opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0]) ||  (opcode[3] && opcode[2] && opcode[1])) || (opcode[0]&&opcode[1]&&opcode[2]&&opcode[3]);
+assign reg_WE = ~( mem_WE || (opcode[3] && ~opcode[2] && ~opcode[1] && ~opcode[0]) ||  (opcode[3] && opcode[2] && opcode[1]));
 
 
 //Solo se habilita con el Compare

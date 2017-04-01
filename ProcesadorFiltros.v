@@ -27,7 +27,6 @@ module ProcesadorFiltros(
 	output [95:0] R
 );
 
-
 wire	[16:0] ctrl;
 wire	[15:0] inst;
 wire	[15:0] ints;
@@ -92,11 +91,9 @@ wire	[31:0] SYNTHESIZED_WIRE_67;
 
 assign	Data_Dir_RAM = SYNTHESIZED_WIRE_73;
 wire	[3:0] GDFX_TEMP_SIGNAL_1;
-wire	[1:0] GDFX_TEMP_SIGNAL_0;
 
 
 assign	GDFX_TEMP_SIGNAL_1 = {inst[0],inst[1],inst[2],inst[3]};
-assign	GDFX_TEMP_SIGNAL_0 = {inst[9],inst[10]};
 
 
 adder	b2v_adder_2(
@@ -144,13 +141,13 @@ Ext12	b2v_Ext_Imm(
 	.o(SYNTHESIZED_WIRE_2));
 
 
-ext2	b2v_Ext_Offset_1_2(
-	.i(inst[2:1]),
+signedExt4	b2v_Ext_Offset_1_2(
+	.i(inst[3:0]),
 	.o(SYNTHESIZED_WIRE_56));
 
 
-ext2	b2v_Ext_Offset_Store_9_10(
-	.i(GDFX_TEMP_SIGNAL_0),
+signedExt4	b2v_Ext_Offset_Store_9_10(
+	.i(inst[11:8]),
 	.o(SYNTHESIZED_WIRE_57));
 
 
@@ -189,10 +186,10 @@ adelantamiento	b2v_inst20(
 	.mem_WE(mem_ctrl[8]),
 	.WE_Mem_WB(SYNTHESIZED_WIRE_70),
 	.clk(clk),
-	.Ra_F_Reg(inst[3:0]),
+	.Ra_F_Reg(inst[7:4]),
 	.RE_A_F_Reg(ctrl[3]),
 	.Ra_Reg_Exe(SYNTHESIZED_WIRE_8),
-	.Rb_F_Reg(inst[7:4]),
+	.Rb_F_Reg(inst[3:0]),
 	.RE_B_F_Reg(ctrl[2]),
 	.Rb_Reg_Exe(SYNTHESIZED_WIRE_71),
 	.Robj_Exe_Mem(SYNTHESIZED_WIRE_72),

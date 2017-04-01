@@ -24,7 +24,7 @@ module Register_REG_EXE(	input EN,
 reg [16:0] r_o_ctrl;
 reg [3:0] r_o_Ra;
 reg [3:0] r_o_Rb;
-reg [3:0] r_o_DatA;
+reg [31:0] r_o_DatA;
 reg [31:0] r_o_DatB;
 reg [31:0] r_o_Off21;
 reg [31:0] r_o_OffStore;
