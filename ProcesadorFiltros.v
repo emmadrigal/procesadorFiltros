@@ -19,7 +19,7 @@
 
 module ProcesadorFiltros(
 	input clk,
-	input Data_in_RAM,
+	input [7:0] Data_in_RAM,
 	output mem_RE_RAM,
 	output mem_WE_RAM,
 	output [31:0] Data_Dir_RAM,
