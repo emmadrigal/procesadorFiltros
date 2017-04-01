@@ -3,6 +3,6 @@ module Ext12(input [11:0] i,
 				);
 
 
-assign o = {20'd0,i};
+assign o = {{20{i[11]}},i};
 				
 endmodule 
