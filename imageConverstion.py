@@ -1,29 +1,57 @@
 import numpy as np
 import cv2
 
-size1 = 400
-size2 = 350
-size3 = 300
 
-filename = raw_input("Please enter the name of the 1st image: ")
+def valuePrint(filename, data, position):
+    f.write(hex(position + 3)[2:])
+    f.write(" : ")
+    num = hex(data & 255)
+    num = num[2:]
+    num = num.rjust(2, '0')
+    f.write(num)
+    f.write(";\n")
+
+    data = data >> 8
+
+    f.write(hex(position + 2)[2:])
+    f.write(" : ")
+    num = hex(data & 255)
+    num = num[2:]
+    num = num.rjust(2, '0')
+    f.write(num)
+    f.write(";\n")
+
+    data = data >> 8
+
+    f.write(hex(position + 1)[2:])
+    f.write(" : ")
+    num = hex(data & 255)
+    num = num[2:]
+    num = num.rjust(2, '0')
+    f.write(num)
+    f.write(";\n")
+
+    data = data >> 8
+
+    f.write(hex(position)[2:])
+    f.write(" : ")
+    num = hex(data & 255)
+    num = num[2:]
+    num = num.rjust(2, '0')
+    f.write(num)
+    f.write(";\n")
+
+
+filename = raw_input("Please enter the name of the image: ")
+imageSize = int(raw_input("Please desired size: "))
 image1 = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-image1 = cv2.resize(image1, (size1, size1))
-
-
-filename = raw_input("Please enter the name of the 2nd image: ")
-image2 = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-image2 = cv2.resize(image2, (size2, size2))
-
-
-filename = raw_input("Please enter the name of the 3rd image: ")
-image3 = cv2.imread(filename, cv2.IMREAD_GRAYSCALE)
-image3 = cv2.resize(image3, (size3, size3))
+image1 = cv2.resize(image1, (imageSize, imageSize))
 
 
 f = open("mem_Init.mif", 'w')
 
 f.write("DEPTH = ")
-depth = str(size1*size1 + size2*size2 + size3*size3+1000)
+depth = str(imageSize*imageSize + 1000)
 f.write(depth)
 f.write(";\n")
 
@@ -33,10 +61,16 @@ f.write("DATA_RADIX = HEX;\n")
 f.write("CONTENT\n")
 f.write("BEGIN\n\n")
 
+valuePrint(f, 400, 92)
+valuePrint(f, 400, 96)
+valuePrint(f, 1000, 100)
+valuePrint(f, 161000, 104)
+valuePrint(f, 373500, 108)
+
 val = 1000
 
-for i in range(size1):
-    for j in range(size1):
+for i in range(imageSize):
+    for j in range(imageSize):
         f.write(hex(val)[2:])
         f.write(" : ")
         num = hex(image1[i, j])
@@ -45,30 +79,7 @@ for i in range(size1):
         f.write(num)
         f.write(";\n")
         val = val + 1
-
-
-for i in range(size2):
-    for j in range(size2):
-        f.write(hex(val)[2:])
-        f.write(" : ")
-        num = hex(image2[i, j])
-        num = num[2:]
-        num = num.rjust(2, '0')
-        f.write(num)
-        f.write(";\n")
-        val = val + 1
-
-for i in range(size3):
-    for j in range(size3):
-        f.write(hex(val)[2:])
-        f.write(" : ")
-        num = hex(image3[i, j])
-        num = num[2:]
-        num = num.rjust(2, '0')
-        f.write(num)
-        f.write(";\n")
-        val = val + 1
-
+        
 f.write("\n")
 f.write("END;\n")
 
